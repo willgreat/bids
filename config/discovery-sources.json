@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "sources": [
+    {"id": "ccgp-central-open", "name": "中国政府采购网·中央公开招标", "url": "https://www.ccgp.gov.cn/cggg/zygg/gkzb/", "kind": "official_listing"},
+    {"id": "ccgp-local-open", "name": "中国政府采购网·地方公开招标", "url": "https://www.ccgp.gov.cn/cggg/dfgg/gkzb/", "kind": "official_listing"},
+    {"id": "ccgp-central-negotiation", "name": "中国政府采购网·中央竞争性磋商", "url": "https://www.ccgp.gov.cn/cggg/zygg/jzxcs/", "kind": "official_listing"},
+    {"id": "ccgp-local-negotiation", "name": "中国政府采购网·地方竞争性磋商", "url": "https://www.ccgp.gov.cn/cggg/dfgg/jzxcs/", "kind": "official_listing"},
+    {"id": "telecom", "name": "中国电信阳光采购网", "url": "https://caigou.chinatelecom.com.cn/", "kind": "manual_portal"},
+    {"id": "tower", "name": "中国铁塔电子采购平台", "url": "https://ebid.chinatowercom.cn/", "kind": "manual_portal"},
+    {"id": "unionpay-international", "name": "银联国际采购公告", "url": "https://www.unionpayintl.com/cn/mediaCenter/newsCenter/PurchaseAnnouncement/", "kind": "official_listing"},
+    {"id": "hdu", "name": "杭州电子科技大学采购中心", "url": "https://cgzx.hdu.edu.cn/", "kind": "official_listing"},
+    {"id": "tyut", "name": "太原理工大学采购信息网", "url": "https://cgzb.tyut.edu.cn/", "kind": "official_listing"},
+    {"id": "fudan", "name": "复旦大学采购与招标管理中心", "url": "https://cz.fudan.edu.cn/", "kind": "official_listing"},
+    {"id": "tongji", "name": "同济大学采购平台", "url": "https://czb.tongji.edu.cn/", "kind": "manual_portal"},
+    {"id": "csg", "name": "南方电网供应链统一服务平台", "url": "https://www.bidding.csg.cn/", "kind": "manual_portal"}
+  ],
+  "note": "官方域名/路径根据历史对话整理；当前可达性和解析覆盖必须逐次验证，门户首页不代表完整公告列表。manual_portal 仅生成操作入口。"
+}

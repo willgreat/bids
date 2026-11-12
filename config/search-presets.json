@@ -1,0 +1,22 @@
+{
+  "timezone": "Asia/Shanghai",
+  "default_lookback_days": 14,
+  "lookback_note": "14 天为本次整理建议的初始值，可按执行目标调整；不是原后台已确认的配置。",
+  "query_templates": [
+    "\"{keyword}\" \"采购公告\" after:{window_start} before:{window_end}",
+    "\"{keyword}\" \"招标公告\" after:{window_start} before:{window_end}",
+    "site:{domain} \"{keyword}\" \"询比\"",
+    "\"{project_code}\" \"更正\"",
+    "\"{project_code}\" \"延期\"",
+    "\"{project_title}\" \"第二次\""
+  ],
+  "presets": [
+    {"id": "rtc", "label": "音视频与 RTC", "terms": ["实时音视频", "RTC", "音视频", "视频会议", "融合通信", "即时通信"]},
+    {"id": "streaming", "label": "直播与媒体平台", "terms": ["直播平台", "流媒体", "云导播", "连麦", "播放器", "IPTV", "视频平台"]},
+    {"id": "speech", "label": "语音与智能客服", "terms": ["语音引擎", "智能客服", "话务系统", "语音转写", "语音合成", "客服机器人"]},
+    {"id": "software", "label": "纯软件与平台开发", "terms": ["软件开发", "平台开发", "门户", "小程序", "校友平台", "人工智能", "大模型"]}
+  ],
+  "notice_terms": ["采购公告", "招标公告", "竞争性磋商", "询比公告", "比选公告", "寻源公告"],
+  "review_dimensions": ["硬件占比", "原厂授权", "业绩门槛", "驻场", "企业规模", "CA"],
+  "note": "词组来自历史对话，不构成搜索结果或资格结论；每轮必须在线核验。"
+}

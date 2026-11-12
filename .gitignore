@@ -1,0 +1,45 @@
+# Python and local environments
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+
+# Secrets and machine-local configuration
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+credentials*.json
+secrets*.json
+.DS_Store
+
+# Runtime business records, private files and logs
+data/
+uploads/
+attachments/
+backups/
+exports/
+reports/
+verification/
+*.sqlite
+*.sqlite3
+*.sqlite-wal
+*.sqlite-shm
+*.sqlite3-wal
+*.sqlite3-shm
+*.db
+*.db-wal
+*.db-shm
+*.log
+seed.json
+*.zip
+*.tar
+*.tar.gz
+
+# Frontend generated dependencies and output
+node_modules/
+dist/
