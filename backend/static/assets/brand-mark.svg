@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="110 91 560 560" width="640" height="640" role="img" aria-labelledby="title">
+  <title id="title">亿有引力 · 引力核</title>
+  <defs>
+    <path id="orbit" d="M440 194 C456 194 462 207 452 219 C443 228 418 232 392 244 C310 282 231 340 204 398 C182 444 200 491 245 513 C257 519 270 522 282 526 C294 529 294 542 279 548 C220 558 167 534 145 490 C122 445 133 407 162 364 C206 297 297 239 375 209 C401 199 425 193 440 194 Z"/>
+  </defs>
+  <g fill="#4657f4">
+    <use href="#orbit"/>
+    <use href="#orbit" transform="rotate(180 390 371)"/>
+    <circle cx="390" cy="371" r="59"/>
+  </g>
+</svg>

@@ -1,0 +1,42 @@
+{
+  "source": "user-supplied bids.zip",
+  "note": "Imported application files are byte-identical to the uploaded source. README and tests are repository additions.",
+  "files": [
+    {
+      "path": "backend/server.py",
+      "sha256": "a3a76137227e38acac15cbbe730c0a2b6d7cbc37e5beca7de0a5c4c187947f90"
+    },
+    {
+      "path": "backend/discovery.py",
+      "sha256": "0983cd22f30cd0c06deac20cc85130ad577184cd4dd9343de5a5a22bbbcd66fa"
+    },
+    {
+      "path": "backend/deploy_remote.py",
+      "sha256": "56cb500fac21527ff101619ae103bb2a2e9fc9984dfc4ca10583120fc5ab4e70"
+    },
+    {
+      "path": "backend/.gitignore",
+      "sha256": "4a67270317868f178621d492361c6fec903c61c266f34963f545fa57ea591895"
+    },
+    {
+      "path": "backend/static/app.js",
+      "sha256": "c791fc2ba4be79cf383ed0c01034ec894bd793f1c3ec1153791ed53241a8b611"
+    },
+    {
+      "path": "backend/static/assets/brand-mark.svg",
+      "sha256": "1c6528272773a3817e69aadaad431044704362b48a6cf750465e93b2c8aa1b23"
+    },
+    {
+      "path": "backend/static/assets/login-connection.webp",
+      "sha256": "1a4d30a14d12de06da260d59700e9a1a694e798b8718daee0eb57cf0d981b2f3"
+    },
+    {
+      "path": "backend/static/index.html",
+      "sha256": "58c878f8d872760e774e99e30e5af71ea69771a33b9699ae0442d435a2b53714"
+    },
+    {
+      "path": "backend/static/styles.css",
+      "sha256": "969ab2b9b6da90cbee019b7be36725c081813ed060c9a013794e963e7d91e9dc"
+    }
+  ]
+}

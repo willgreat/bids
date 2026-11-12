@@ -16,6 +16,10 @@ venv/
 credentials*.json
 secrets*.json
 .DS_Store
+.local/
+__MACOSX/
+._*
+initial-data/
 
 # Runtime business records, private files and logs
 data/

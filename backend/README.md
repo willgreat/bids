@@ -1,43 +1,70 @@
-# 招标管理后台源码目录
+# 招标管理后台
 
-**当前目录仅保留源码接收说明，尚未包含可运行的后台。** 用户导出的 Codex 对话包含功能设计、文件名及历史验证记录，但文件读写只显示摘要，没有完整源码。这里没有用新实现替代原系统，也未迁移线上项目、数据库或附件。
+从用户提供的 `bids.zip` 导入原后台源码，保留项目台账、领件状态、截止日历、CA 管理、附件、公告发现、操作记录、导出、置顶及弃标恢复功能。应用文件保持原样，校验清单见 [`../docs/source-manifest.json`](../docs/source-manifest.json)。
 
-## 待导入的原文件
+## 依赖与验证
 
-从原项目的 `mgmt/bids/` 取得并审阅以下源码，再按相同相对路径放入本目录：
+Python 使用标准库，独立功能已在 Python 3.12 验证；前端为原生 HTML/JavaScript/CSS，无需安装 npm 依赖或构建。前端测试需要 Node.js。在仓库根目录执行：
 
-```text
-backend/
-├── README.md
-├── server.py
-├── discovery.py
-├── deploy_remote.py
-├── .gitignore
-├── seed.json                       # 仅允许经确认的脱敏示例；不复制生产台账
-└── static/
-    ├── index.html
-    ├── app.js
-    ├── styles.css
-    └── assets/
-        ├── brand-mark.svg          # 页面引用且允许发布时导入
-        └── login-connection.webp   # 页面引用且允许发布时导入
+```sh
+python3 -m unittest discover -s backend/tests -p 'test_*.py' -v
+node --test backend/tests/test_lifecycle.cjs
+node --check backend/static/app.js
+
+export BIDS_DATA="$PWD/.local/bids-data"
+python3 backend/server.py init
+python3 backend/server.py backup
 ```
 
-对话还提到旧的 `get-login-code.sh`。登录方式后来改为用户名和密码，因此该脚本应先确认用途，不应直接作为现行登录入口。实际源码若有依赖声明或锁文件，也应一并审阅、导入；附件没有证明这些文件是否存在。
+`init` 可以重复执行，未指定 `--seed` 时创建空台账。`backup` 为台账 SQLite 创建快照并保留最近 14 份；它不备份上传文件或外部账号库。`.local/` 被 Git 忽略。
 
-## 已知功能与依赖边界
+## 完整登录所缺的依赖
 
-历史记录中的后台采用 Python 服务、SQLite 和静态 HTML/JavaScript/CSS，提供项目台账、参与决策、领件状态、截止日历、CA 管理、附件、在线发现、操作记录与导出，并支持置顶、弃标和恢复。默认台账隐藏过期及已弃标项目。
+源码包不能独立完成登录，仍需从原网站工程补齐：
 
-早期实现依赖原官网账号模块，出现过 `BIDS_AUTH_PATH`、`INQUIRY_DB` 等配置；后续改为密码登录，但导出中没有完整认证实现。拿到源码后必须确认是否仍依赖外部账号模块及其数据库，不能假定仅复制本目录即可启动。任何历史登录凭据均不得写入代码或示例配置。
+- `workflow` 模块及其依赖，通过 `BIDS_AUTH_PATH` 指定目录；后台调用 `token_hash(token)`、`session(connection, token)`。
+- 原官网账号数据库的初始化/迁移逻辑，包含 `console_sessions` 会话表；数据库路径通过 `INQUIRY_DB` 指定。开发环境应初始化独立测试账号库，不能提交生产账号库。
 
-## 导入与验证
+`set-password` 只创建或更新 `console_password_accounts`，不会创建账号数据库或原官网会话表。不要用空文件冒充完整认证初始化，也不要以简化认证替代原官网逻辑。
 
-1. 提供原始源码文件或仅含源码的压缩包。不要直接复制整套部署目录；排除数据库及备份、上传文件、供应商材料、截图、日志、私钥、证书、环境配置和认证数据。
-2. 审阅代码中的绝对路径、部署地址、凭据及个人或业务信息。将运行配置与业务数据置于源码目录外，并保留来源版本记录。
-3. 检查实际 README、依赖、启动入口及外部认证模块，再确定安装和启动命令。导出中出现过 `init`、`serve` 和 `import-files` 子命令，但本仓库尚未验证这些命令，不能据此直接操作生产环境。
-4. 使用独立临时数据验证启动与健康检查、登录退出、未登录访问限制、项目增改及版本冲突、附件上传下载、CA 管理、置顶、弃标和恢复。
-5. 验证领件截止、响应截止、已申请、已领取、已递交、仅日期节点、延期及历史节点的分类；确保统计、日历和项目列表采用同一规则。验证检索失败会如实记录，不把旧公告或未核实线索当作最新有效项目。
-6. 检查待提交文件和差异后再提交源码。原对话中的测试结果不代表当前仓库通过验证；源码导入后应重新记录测试结果。
+补齐上述依赖后，在仓库根目录设置以下参数。这个完整登录流程尚未在当前环境验证：
 
-当前没有自动部署配置，也没有对现有线上后台进行修改。
+```sh
+export BIDS_DATA="$PWD/.local/bids-data"
+export BIDS_AUTH_PATH="/path/to/website/auth-module-directory"
+export INQUIRY_DB="/path/to/initialized-test-auth.sqlite3"
+export BIDS_PORT=8791
+export BIDS_ORIGINS="https://bids.example.com"
+
+# 隐藏输入密码，不要把密码写入命令行或版本库
+python3 backend/server.py set-password --username admin --actor 管理员
+python3 backend/server.py serve
+```
+
+服务绑定 `127.0.0.1`。对外由 HTTPS 反向代理访问 `/mgmt/bids/`，透传正确的 `Host` 和 `Origin`，二者须匹配 `BIDS_ORIGINS`。会话 Cookie 包含 `Secure`；普通 HTTP 访问不能代替完整登录验证。不要关闭这些校验来让测试通过。
+
+服务器本机健康检查：
+
+```sh
+curl --fail --header 'Host: bids.example.com' http://127.0.0.1:8791/mgmt/bids/api/health
+```
+
+## 公告检索
+
+```sh
+python3 backend/discovery.py 软件开发 音视频 RTC
+```
+
+原程序请求 8 个公开公告栏目及 3 个 Bing RSS 查询，默认窗口 **30 天**，最多返回 **25 条**候选。`BIDS_DISCOVERY_DAYS` 调整窗口；`BIDS_DISCOVERY_SOURCES` 按来源名称或域名筛选。没有日期的 RSS 线索不会因窗口被过滤，不能直接当作已核验的新公告。
+
+所需域名：`www.ccgp.gov.cn`、`cgzx.hdu.edu.cn`、`cz.fudan.edu.cn`、`cgzb.tyut.edu.cn`、`www.unionpayintl.com`、`www.bing.com`。登录后的采购文件及其他人工门户按[执行流程](../docs/workflows.md)办理。
+
+仓库根目录 `config/` 是人工/执行代理的流程参考，**原程序尚未读取这些 JSON**。其中建议的 14 天窗口与程序默认 30 天不同，执行时应明确采用哪个窗口。必须检查返回的 `errors`；零候选不能证明没有项目。
+
+## 原服务器部署脚本
+
+`deploy_remote.py` 保留原文件。它在模块顶层直接改写 Nginx/systemd 配置并操作服务，**不能作为普通库导入或用于本地测试**。它依赖原网站 Nginx 结构、`yiyouyinli-inquiries.service`，首次部署还需要包中没有的 `initial-data/`。它不是通用安装器，执行前需针对实际服务器审阅与备份。本次未执行部署脚本或改动线上服务。
+
+## 导入范围
+
+未导入真实 `seed.json`、数据库、上传文件、验收截图与结果、私钥、Python 缓存或 macOS 元数据。原 README 已改写为不含具体管理员身份的说明。详见[导入与验证记录](../docs/source-import.md)。

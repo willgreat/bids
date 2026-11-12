@@ -1,5 +1,7 @@
 # Backend source recovery audit
 
+> Historical audit of the conversation export. The user subsequently supplied `bids.zip`; the application source is now in `backend/`. See [current import status](source-import.md). The missing-source statements below describe the earlier conversation-only input, not the current repository. External website authentication dependencies remain missing.
+
 The uploaded Markdown conversation records code writes and file reads by filename and line-count summaries only. It does not include the bodies of `server.py`, `discovery.py`, `deploy_remote.py`, `static/app.js`, `static/index.html`, or `static/styles.css`. Exact recovery of the original deployed backend is therefore not possible from this export alone. Embedded executable snippets are operational/test commands, not a complete codebase. No snippets from the export were executed.
 
 ## Observed structure
